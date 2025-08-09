@@ -12,10 +12,10 @@ import jakarta.persistence.Table;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "addressId")
+    @Column(name = "address_id")
     private int addressId;
 
-    @Column(name = "fullAddress", nullable = false, length = 999)
+    @Column(name = "full_address", nullable = false, length = 999)
     private String fullAddress;
 
     // Getters and Setters

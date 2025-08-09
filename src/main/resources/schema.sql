@@ -1,37 +1,37 @@
 
 create table if not exists address (
-	addressId serial primary key,
-	fullAddress varchar(999) not null
+	address_id serial primary key,
+	full_address varchar(999) not null
 );
 
 create table if not exists employee (
-	empId serial primary key,
-	firstName varchar(200) not null,
-	lastName varchar,
+	emp_id serial primary key,
+	first_name varchar(200) not null,
+	last_name varchar,
 	email varchar(200) not null unique,
 	contact varchar(50) not null,
-	addressId int not null,
-	jobTitle varchar(200) not null,
+	address_id int not null,
+	job_title varchar(200) not null,
 	dob date not null,
-	joiningDate date not null default now(),
-	isServing boolean not null default true,
-	constraint fk_addressId_address foreign key (addressId) references address(addressId)
+	joining_date date not null default now(),
+	is_serving boolean not null default true,
+	constraint fk_address_id_address foreign key (address_id) references address(address_id)
 );
 
 
 create table if not exists job (
-	jobId serial primary key,
-	jobTitle varchar(500) not null,
-	postedOn date not null default now(),
+	job_id serial primary key,
+	job_title varchar(500) not null,
+	posted_on date not null default now(),
 	compensation int not null default 0,
-	postedBy int not null,
-	hiringManager int not null,
-	jobDescription text,
-	isActive boolean not null default true,
-	constraint fk_postedBy_employee foreign key (postedBy) references employee(empId),				
-	constraint fk_hiringManager_employee foreign key (hiringManager) references employee(empId)
+	posted_by int not null,
+	hiring_manager int not null,
+	job_description text,
+	is_active boolean not null default true,
+	constraint fk_posted_by_employee foreign key (posted_by) references employee(emp_id),				
+	constraint fk_hiring_manager_employee foreign key (hiring_manager) references employee(emp_id)
 );
 
-create index employee_index on employee(empId);
-create index job_index on job(jobId);
-create index address_index on address(addressId);
+create index employee_index on employee(emp_id);
+create index job_index on job(job_id);
+create index address_index on address(address_id);

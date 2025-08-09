@@ -16,26 +16,26 @@ import jakarta.persistence.Table;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "empId")
+    @Column(name = "emp_id")
     private int empId;
-    @Column(name = "firstName", nullable = false, length = 200)
+    @Column(name = "first_name", nullable = false, length = 200)
     private String firstName;
-    @Column(name = "lastName", nullable = true, length = 200)
+    @Column(name = "last_name", nullable = true, length = 200)
     private String lastName;
     @Column(name = "email", nullable = false, length = 200, unique = true)
     private String email;
     @Column(name = "contact", nullable = false, length = 50)
     private String contact;
     @OneToOne
-    @JoinColumn(name = "addressId", referencedColumnName = "addressId")
+    @JoinColumn(name = "address_id", referencedColumnName = "address_id")
     private Address address;
-    @Column(name = "jobTitle", nullable = false, length = 200)
+    @Column(name = "job_title", nullable = false, length = 200)
     private String jobTitle;
     @Column(name = "dob", nullable = false)
     private Date dateOfBirth;
-    @Column(name = "joiningDate")
+    @Column(name = "joining_date")
     private Date joiningDate;
-    @Column(name = "isServing")
+    @Column(name = "is_serving")
     private Boolean isServing;
 
     // Getters and Setters

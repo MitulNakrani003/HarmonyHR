@@ -14,22 +14,23 @@ import jakarta.persistence.OneToOne;
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "job_id")
     private int jobId;
-    @Column(name = "jobTitle", nullable = false, length = 500)
+    @Column(name = "job_title", nullable = false, length = 500)
     private String jobTitle;
-    @Column(name = "postedOn")
+    @Column(name = "posted_on")
     private Date postedOn;
     @Column(name = "compensation", nullable = false)
     private int compensation;
-    @Column(name = "jobDescription", nullable = true)
+    @Column(name = "job_description", nullable = true)
     private String jobDescription;
     @OneToOne
-    @JoinColumn(name = "postedBy", referencedColumnName = "empId")
+    @JoinColumn(name = "posted_by", referencedColumnName = "emp_id")
     private Employee postedBy;
     @OneToOne
-    @JoinColumn(name = "hiringManager", referencedColumnName = "empId")
+    @JoinColumn(name = "hiring_manager", referencedColumnName = "emp_id")
     private Employee hiringManager;
-    @Column(name = "isActive", nullable = false)
+    @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
     // Getters and Setters
