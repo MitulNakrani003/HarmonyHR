@@ -10,10 +10,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "employee")
 public class Employee {
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "emp_id")
@@ -38,64 +41,42 @@ public class Employee {
     @Column(name = "is_serving")
     private Boolean isServing;
 
-    // Getters and Setters
-    public int getEmpId() {
-        return empId;
-    }
     public void setEmpId(int empId) {
         this.empId = empId;
     }
-    public String getFirstName() {
-        return firstName;
-    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    public String getLastName() {
-        return lastName;
-    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public String getEmail() {
-        return email;
-    }
+
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getContact() {
-        return contact;
-    }
+
     public void setContact(String contact) {
         this.contact = contact;
     }
-    public Address getAddress() {
-        return address;
-    }
+
     public void setAddress(Address address) {
         this.address = address;
     }
-    public String getJobTitle() {
-        return jobTitle;
-    }
+
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
     }
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
+
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-    public Date getJoiningDate() {
-        return joiningDate;
-    }
+
     public void setJoiningDate(Date joiningDate) {
         this.joiningDate = joiningDate;
     }
-    public Boolean getIsServing() {
-        return isServing;
-    }
+
     public void setIsServing(Boolean isServing) {
         this.isServing = isServing;
     }

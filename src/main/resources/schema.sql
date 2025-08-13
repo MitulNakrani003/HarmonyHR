@@ -37,20 +37,15 @@ create index employee_index on employee(emp_id);
 create index job_index on job(job_id);
 create index address_index on address(address_id);
 
-
-create type roles as enum ('ADMIN', 'MANAGER', 'EMPLOYEE', 'GUEST');
-
 create table if not exists users (
 	user_id serial primary key,
 	username varchar(50) unique not null,
 	password varchar(200) not null,
 	belongs_to int not null,
-	access_rights roles not null default 'EMPLOYEE',
+	access_rights VARCHAR(50) not null default 'EMPLOYEE',
 	constraint fk_belongs_to_employee foreign key (belongs_to) references employee(emp_id)
 );
 
 create index users_index on users(user_id);
-
-
 
 

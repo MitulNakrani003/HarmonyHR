@@ -9,9 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
+@Table(name = "job")
 public class Job {
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_id")
@@ -33,52 +38,34 @@ public class Job {
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    // Getters and Setters
-    public int getJobId() {
-        return jobId;
-    }
     public void setJobId(int jobId) {
         this.jobId = jobId;
     }
-    public String getJobTitle() {
-        return jobTitle;
-    }
+
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
     }
-    public Date getPostedOn() {
-        return postedOn;
-    }
+
     public void setPostedOn(Date postedOn) {
         this.postedOn = postedOn;
     }
-    public int getCompensation() {
-        return compensation;
-    }
+
     public void setCompensation(int compensation) {
         this.compensation = compensation;
     }
-    public Employee getHiringManager() {
-        return hiringManager;
-    }
+
     public void setHiringManager(Employee hiringManager) {
         this.hiringManager = hiringManager;
     }
-    public Employee getPostedBy() {
-        return postedBy;
-    }
+
     public void setPostedBy(Employee postedBy) {
         this.postedBy = postedBy;
     }
-    public String getJobDescription() {
-        return jobDescription;
-    }
+
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
     }
-    public Boolean getIsActive() {
-        return isActive;
-    }
+
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }

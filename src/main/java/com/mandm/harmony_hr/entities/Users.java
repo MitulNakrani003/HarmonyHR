@@ -2,6 +2,13 @@ package com.mandm.harmony_hr.entities;
 
 import com.mandm.harmony_hr.models.Roles;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,10 +19,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "users")
-public class Users {
+public class Users implements UserDetails {
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -28,37 +38,51 @@ public class Users {
     @JoinColumn(name = "belongs_to", referencedColumnName = "emp_id")
     private Employee belongsTo;
     @Enumerated(EnumType.STRING)
+    @Column(name = "access_rights", columnDefinition = "roles")
     private Roles accessRights;
 
-    // Getters and Setters
-    public int getUserId() {
-        return userId;
-    }
     public void setUserId(int userId) {
         this.userId = userId;
     }
-    public String getUsername() {
-        return username;
-    }
+
     public void setUsername(String username) {
         this.username = username;
     }
-    public String getPassword() {
-        return password;
-    }
+
     public void setPassword(String password) {
         this.password = password;
     }
-    public Roles getAccessRights() {
-        return accessRights;
-    }
+
     public void setAccessRights(Roles accessRights) {
         this.accessRights = accessRights;
     }
-    public Employee getBelongsTo() {
-        return belongsTo;
-    }
+
     public void setBelongsTo(Employee belongsTo) {
         this.belongsTo = belongsTo;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(accessRights.name()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
