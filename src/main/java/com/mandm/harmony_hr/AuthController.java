@@ -1,5 +1,6 @@
 package com.mandm.harmony_hr;
 
+import com.mandm.harmony_hr.dto.AuthenticationErrorResponse;
 import com.mandm.harmony_hr.dto.JwtResponse;
 import com.mandm.harmony_hr.dto.LoginRequest;
 import com.mandm.harmony_hr.dto.MessageResponse;
@@ -11,16 +12,23 @@ import com.mandm.harmony_hr.repositories.EmployeeRepository;
 import com.mandm.harmony_hr.repositories.UsersRepository;
 import com.mandm.harmony_hr.utils.JwtUtils;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
 
@@ -46,20 +54,26 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Users user = (Users) authentication.getPrincipal();
-        String jwt = jwtUtils.generateToken(user.getUsername(), user.getAccessRights().name());
+            Users user = (Users) authentication.getPrincipal();
+            String jwt = jwtUtils.generateToken(user.getUsername(), user.getAccessRights().name());
 
-        return ResponseEntity.ok(new JwtResponse(jwt));
+            return ResponseEntity.ok(new JwtResponse(jwt));
+        } catch (BadCredentialsException e) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(new AuthenticationErrorResponse("Invalid Username or Password", 401));
+        }
     }
 
     @PostMapping("/signup")
@@ -73,5 +87,14 @@ public class AuthController {
         usersRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    //Roles for Signup Form
+    @GetMapping("/roles")
+    public ResponseEntity<List<String>> getRoles() {
+        List<String> roles = Arrays.stream(Roles.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(roles);
     }
 }

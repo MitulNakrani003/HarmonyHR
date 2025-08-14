@@ -27,4 +27,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @EntityGraph(attributePaths = {"address"})
     List<Employee> findAll();
 
+    Optional<Employee> findByEmail(String email);
 }

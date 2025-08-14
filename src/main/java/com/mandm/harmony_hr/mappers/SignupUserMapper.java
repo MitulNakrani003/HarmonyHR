@@ -16,8 +16,8 @@ public class SignupUserMapper {
         user.setAccessRights(Roles.valueOf(signUpRequest.getAccessRights()));
 
         // Fetch the Employee entity and set it
-        Employee employee = employeeRepository.findById(signUpRequest.getBelongsTo())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid employee ID: " + signUpRequest.getBelongsTo()));
+        Employee employee = employeeRepository.findByEmail(signUpRequest.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid employee Email: " + signUpRequest.getEmail()));
         user.setBelongsTo(employee);
 
         return user;
