@@ -68,7 +68,7 @@ public class AuthController {
             Users user = (Users) authentication.getPrincipal();
             String jwt = jwtUtils.generateToken(user.getUsername(), user.getAccessRights().name());
 
-            return ResponseEntity.ok(new JwtResponse(jwt));
+            return ResponseEntity.ok(new JwtResponse(jwt, user.getUserId()));
         } catch (BadCredentialsException e) {
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
