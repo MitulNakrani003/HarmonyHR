@@ -10,10 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
-@Entity
+@Data
 @Table(name = "job")
 public class Job {
     // Getters and Setters
@@ -21,52 +21,46 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_id")
     private int jobId;
+
     @Column(name = "job_title", nullable = false, length = 500)
     private String jobTitle;
+
     @Column(name = "posted_on")
     private Date postedOn;
+
     @Column(name = "compensation", nullable = false)
     private int compensation;
+
     @Column(name = "job_description", nullable = true)
     private String jobDescription;
+
     @OneToOne
     @JoinColumn(name = "posted_by", referencedColumnName = "emp_id")
     private Employee postedBy;
+
     @OneToOne
     @JoinColumn(name = "hiring_manager", referencedColumnName = "emp_id")
     private Employee hiringManager;
+
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
-    }
+    @Column(name = "job_address", nullable = true, length = 999)
+    private String jobAddress;
 
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
+    @Column(name = "city", nullable = true, length = 200)
+    private String city;
 
-    public void setPostedOn(Date postedOn) {
-        this.postedOn = postedOn;
-    }
+    @Column(name = "state", nullable = true, length = 200)
+    private String state;
 
-    public void setCompensation(int compensation) {
-        this.compensation = compensation;
-    }
+    @Column(name = "minimum_experience", nullable = false)
+    private int minimumExperience;
 
-    public void setHiringManager(Employee hiringManager) {
-        this.hiringManager = hiringManager;
-    }
+    @Column(name = "maximum_experience", nullable = true)
+    private int maximumExperience;
 
-    public void setPostedBy(Employee postedBy) {
-        this.postedBy = postedBy;
-    }
-
-    public void setJobDescription(String jobDescription) {
-        this.jobDescription = jobDescription;
-    }
-
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
+    @OneToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id")
+    private Departments departmentId;
 }

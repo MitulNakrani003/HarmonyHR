@@ -17,7 +17,7 @@ create table if not exists employee (
 	joining_date date not null default now(),
 	is_serving boolean not null default true,
 	constraint fk_address_id_address foreign key (address_id) references address(address_id)
-);
+); 
 
 
 create table if not exists job (
@@ -37,7 +37,7 @@ create index employee_index on employee(emp_id);
 create index job_index on job(job_id);
 create index address_index on address(address_id);
 
-create table if not exists users (
+ create table if not exists users (
 	user_id serial primary key,
 	username varchar(50) unique not null,
 	password varchar(200) not null,
@@ -47,5 +47,30 @@ create table if not exists users (
 );
 
 create index users_index on users(user_id);
+
+/*Phase 2*/
+
+create table if not exists departments (
+    department_id serial primary key ,
+	department_title varchar(255) not null unique,
+    description text null,
+    is_active boolean not null default true
+);
+
+alter table job
+add column job_address varchar(999),
+add column city varchar(200),
+add column state varchar(200),
+add column minimum_experience int not null default 0,
+add column maximum_experience int,
+add column department_id int;
+
+alter table job
+add constraint fk_department_id_department
+foreign key (department_id) references departments(department_id) on delete set null;
+
+alter table job
+add constraint chk_experience_range
+check (minimum_experience <= maximum_experience);
 
 

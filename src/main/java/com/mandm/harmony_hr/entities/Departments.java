@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Entity(name = "departments")
-public class Department {
+public class Departments {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +24,4 @@ public class Department {
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive;
-
 }

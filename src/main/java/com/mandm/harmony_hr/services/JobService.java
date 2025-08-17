@@ -1,2 +1,7 @@
-package com.mandm.harmony_hr.services;public class JobService {
+package com.mandm.harmony_hr.services;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class JobService {
 }
