@@ -4,6 +4,7 @@ import com.mandm.harmony_hr.entities.Job;
 import com.mandm.harmony_hr.services.JobService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,8 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<List<Job>> getAllJobs() {
         return ResponseEntity.ok(jobService.getAllJobs());
     }

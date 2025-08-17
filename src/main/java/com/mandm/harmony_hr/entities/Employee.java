@@ -11,8 +11,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -40,45 +42,5 @@ public class Employee {
     private Date joiningDate;
     @Column(name = "is_serving")
     private Boolean isServing;
-
-    public void setEmpId(int empId) {
-        this.empId = empId;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setJobTitle(String jobTitle) {
-        this.jobTitle = jobTitle;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public void setJoiningDate(Date joiningDate) {
-        this.joiningDate = joiningDate;
-    }
-
-    public void setIsServing(Boolean isServing) {
-        this.isServing = isServing;
-    }
 
 }

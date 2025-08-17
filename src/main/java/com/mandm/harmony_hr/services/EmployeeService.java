@@ -34,7 +34,6 @@ public class EmployeeService {
     public Employee getEmployeeByUserId(int userId) {
         Users user = usersRepository.getByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with user id: " + userId));
-
         return user.getBelongsTo();
     }
 }

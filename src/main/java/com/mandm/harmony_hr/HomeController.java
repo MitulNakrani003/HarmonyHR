@@ -28,10 +28,5 @@ public class HomeController {
         this.usersRepository = usersRepository;
     }
 
-    @GetMapping("/employee/{userId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
-    public ResponseEntity<Employee> getEmployeeByUserId(@PathVariable int userId) {
-        return ResponseEntity.ok(employeeService.getEmployeeByUserId(userId));
-    }
 
 }

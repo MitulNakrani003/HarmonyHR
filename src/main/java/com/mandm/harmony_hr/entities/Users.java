@@ -20,8 +20,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class Users implements UserDetails {
@@ -40,26 +42,6 @@ public class Users implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "access_rights", columnDefinition = "roles")
     private Roles accessRights;
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setAccessRights(Roles accessRights) {
-        this.accessRights = accessRights;
-    }
-
-    public void setBelongsTo(Employee belongsTo) {
-        this.belongsTo = belongsTo;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
