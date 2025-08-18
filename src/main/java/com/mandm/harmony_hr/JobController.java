@@ -1,5 +1,6 @@
 package com.mandm.harmony_hr;
 
+import com.mandm.harmony_hr.dto.JobsDto;
 import com.mandm.harmony_hr.entities.Job;
 import com.mandm.harmony_hr.services.JobService;
 
@@ -23,7 +24,7 @@ public class JobController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
-    public ResponseEntity<List<Job>> getAllJobs() {
-        return ResponseEntity.ok(jobService.getAllJobs());
+    public ResponseEntity<List<JobsDto>> getAllJobsList() {
+        return ResponseEntity.ok(jobService.getAllJobsList());
     }
 }
