@@ -14,10 +14,23 @@ import java.util.Optional;
 @Repository
 public interface JobRepository extends JpaRepository<Job, Integer> {
 
-    @Query("SELECT j FROM Job j LEFT JOIN FETCH j.postedBy LEFT JOIN FETCH j.hiringManager LEFT JOIN FETCH j.departmentId WHERE j.jobId = :jobId")
+    @Query("SELECT j FROM Job j " +
+            "LEFT JOIN FETCH j.postedBy pb " +
+            "LEFT JOIN FETCH pb.address " +
+            "LEFT JOIN FETCH j.hiringManager hm " +
+            "LEFT JOIN FETCH hm.address " +
+            "LEFT JOIN FETCH j.departmentId " +
+            "WHERE j.jobId = :jobId")
     Optional<Job> findByJobId(Integer jobId);
 
-    @Query("SELECT j FROM Job j LEFT JOIN FETCH j.postedBy LEFT JOIN FETCH j.hiringManager LEFT JOIN FETCH j.departmentId")
+    @Query("SELECT j FROM Job j " +
+            "LEFT JOIN FETCH j.postedBy pb " +
+            "LEFT JOIN FETCH pb.address " +
+            "LEFT JOIN FETCH j.hiringManager hm " +
+            "LEFT JOIN FETCH hm.address " +
+            "LEFT JOIN FETCH j.departmentId")
     List<Job> findAll();
+
+
 
 }

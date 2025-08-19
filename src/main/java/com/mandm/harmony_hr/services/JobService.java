@@ -1,7 +1,9 @@
 package com.mandm.harmony_hr.services;
 
+import com.mandm.harmony_hr.dto.JobDetailsDto;
 import com.mandm.harmony_hr.dto.JobsDto;
 import com.mandm.harmony_hr.entities.Job;
+import com.mandm.harmony_hr.mappers.JobToJobDetailsDtoMapper;
 import com.mandm.harmony_hr.mappers.JobToJobsDtoMapper;
 import com.mandm.harmony_hr.repositories.JobRepository;
 
@@ -26,5 +28,11 @@ public class JobService {
             jobsDtos.add(JobToJobsDtoMapper.mapToDto(job));
         }
         return jobsDtos;
+    }
+
+    public JobDetailsDto getJobDetailsById(Integer jobId) {
+        Job job = jobRepository.findByJobId(jobId)
+                .orElseThrow(() -> new RuntimeException("Job not found with id: " + jobId));
+        return JobToJobDetailsDtoMapper.mapToDetailsDto(job);
     }
 }
