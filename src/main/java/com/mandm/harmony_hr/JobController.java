@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +37,12 @@ public class JobController {
     public ResponseEntity<JobDetailsDto> getJobDetailsById(@PathVariable("jobid") Integer jobid) {
         JobDetailsDto job = jobService.getJobDetailsById(jobid);
         return ResponseEntity.ok(job);
+    }
+
+    @PutMapping("/deactivate")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")// Change this to 'ADMIN' 
+    public ResponseEntity<String> deactivateMultipleJobs(@RequestBody List<Integer> jobIds) {
+        jobService.deactivateJobs(jobIds);
+        return ResponseEntity.ok("Jobs with IDs: " + jobIds + " have been deactivated.");
     }
 }

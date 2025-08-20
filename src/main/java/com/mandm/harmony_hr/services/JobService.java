@@ -8,6 +8,7 @@ import com.mandm.harmony_hr.mappers.JobToJobsDtoMapper;
 import com.mandm.harmony_hr.repositories.JobRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class JobService {
     }
 
     public List<JobsDto> getAllJobsList() {
-        List<Job> jobs = jobRepository.findAll();
+        List<Job> jobs = jobRepository.findAllActive();
         List<JobsDto> jobsDtos = new ArrayList<>();
         for (Job job : jobs) {
             jobsDtos.add(JobToJobsDtoMapper.mapToDto(job));
@@ -34,5 +35,13 @@ public class JobService {
         Job job = jobRepository.findByJobId(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found with id: " + jobId));
         return JobToJobDetailsDtoMapper.mapToDetailsDto(job);
+    }
+
+    @Transactional
+    public void deactivateJobs(List<Integer> jobIds) {
+        if (jobIds == null || jobIds.isEmpty()) {
+            throw new IllegalArgumentException("Job IDs list cannot be null or empty.");
+        }
+        jobRepository.deactivateJobsByIds(jobIds);
     }
 }
