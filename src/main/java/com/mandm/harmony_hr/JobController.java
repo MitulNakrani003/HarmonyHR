@@ -1,8 +1,10 @@
 package com.mandm.harmony_hr;
 
+import com.mandm.harmony_hr.dto.DepartmentTitlesDto;
 import com.mandm.harmony_hr.dto.JobDetailsDto;
 import com.mandm.harmony_hr.dto.JobsDto;
 import com.mandm.harmony_hr.entities.Job;
+import com.mandm.harmony_hr.services.DepartmentsService;
 import com.mandm.harmony_hr.services.JobService;
 
 import org.springframework.http.ResponseEntity;
@@ -21,9 +23,11 @@ import java.util.List;
 public class JobController {
 
     private final JobService jobService;
+    private final DepartmentsService departmentService;
 
-    public JobController(JobService jobService) {
+    public JobController(JobService jobService, DepartmentsService departmentService) {
         this.jobService = jobService;
+        this.departmentService = departmentService;
     }
 
     @GetMapping("/")
@@ -45,4 +49,6 @@ public class JobController {
         jobService.deactivateJobs(jobIds);
         return ResponseEntity.ok("Jobs with IDs: " + jobIds + " have been deactivated.");
     }
+
+    
 }
