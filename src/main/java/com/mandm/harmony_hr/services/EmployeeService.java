@@ -1,11 +1,11 @@
 package com.mandm.harmony_hr.services;
 
+import com.mandm.harmony_hr.dto.EmployeeEmailDto;
 import com.mandm.harmony_hr.entities.Employee;
 import com.mandm.harmony_hr.entities.Users;
 import com.mandm.harmony_hr.repositories.EmployeeRepository;
 import com.mandm.harmony_hr.repositories.UsersRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,6 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final UsersRepository usersRepository;
 
-    @Autowired
     public EmployeeService(EmployeeRepository employeeRepository,
                            UsersRepository usersRepository) {
         this.employeeRepository = employeeRepository;
@@ -35,5 +34,9 @@ public class EmployeeService {
         Users user = usersRepository.getByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with user id: " + userId));
         return user.getBelongsTo();
+    }
+
+    public List<EmployeeEmailDto> getAllEmployeeNamesAndEmails() {
+        return employeeRepository.findAllEmployeeEmails();
     }
 }

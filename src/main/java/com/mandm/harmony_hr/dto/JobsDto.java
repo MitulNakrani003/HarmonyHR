@@ -1,10 +1,7 @@
 package com.mandm.harmony_hr.dto;
 
-import com.mandm.harmony_hr.entities.Employee;
-
 import java.util.Date;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data

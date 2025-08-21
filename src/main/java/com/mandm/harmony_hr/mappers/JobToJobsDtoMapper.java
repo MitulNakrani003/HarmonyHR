@@ -23,6 +23,5 @@ public class JobToJobsDtoMapper {
         jobsDto.setDepartmentTitle(job.getDepartmentId().getDepartmentTitle());
 
         return jobsDto;
-
     }
 }

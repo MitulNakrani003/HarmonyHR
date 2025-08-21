@@ -1,5 +1,6 @@
 package com.mandm.harmony_hr;
 
+import com.mandm.harmony_hr.dto.EmployeeEmailDto;
 import com.mandm.harmony_hr.entities.Employee;
 import com.mandm.harmony_hr.services.EmployeeService;
 
@@ -34,5 +35,11 @@ public class EmployeeController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
     public ResponseEntity<Employee> getEmployeeByUserId(@PathVariable int userId) {
         return ResponseEntity.ok(employeeService.getEmployeeByUserId(userId));
+    }
+
+    @GetMapping("/hiringmanagers")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")
+    public ResponseEntity<List<EmployeeEmailDto>> getAllEmployeeEmails() {
+        return ResponseEntity.ok(employeeService.getAllEmployeeNamesAndEmails());
     }
 }

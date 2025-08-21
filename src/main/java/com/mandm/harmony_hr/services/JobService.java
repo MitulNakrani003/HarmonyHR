@@ -34,7 +34,7 @@ public class JobService {
     public JobDetailsDto getJobDetailsById(Integer jobId) {
         Job job = jobRepository.findByJobId(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found with id: " + jobId));
-        return JobToJobDetailsDtoMapper.mapToDetailsDto(job);
+        return JobToJobDetailsDtoMapper.mapToDto(job);
     }
 
     @Transactional

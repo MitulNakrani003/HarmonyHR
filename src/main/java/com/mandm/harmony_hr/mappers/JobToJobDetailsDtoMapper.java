@@ -5,7 +5,7 @@ import com.mandm.harmony_hr.entities.Job;
 
 public class JobToJobDetailsDtoMapper {
 
-    public static JobDetailsDto mapToDetailsDto(Job job) {
+    public static JobDetailsDto mapToDto(Job job) {
         if (job == null) {
             return null;
         }

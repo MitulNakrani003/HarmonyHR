@@ -11,10 +11,10 @@ public class JobDetailsDto {
     private Date postedOn;
     private int compensation;
     private String jobDescription;
-    private String PostedByName;
-    private String PostedByEmail;
-    private String HiringManagerName;
-    private String HiringManagerEmail;
+    private String postedByName;
+    private String postedByEmail;
+    private String hiringManagerName;
+    private String hiringManagerEmail;
     private Boolean isActive;
     private String jobAddress;
     private String city;
