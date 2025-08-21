@@ -1,25 +1,36 @@
 package com.mandm.harmony_hr.services;
 
+import com.mandm.harmony_hr.dto.CreateJobDto;
 import com.mandm.harmony_hr.dto.JobDetailsDto;
 import com.mandm.harmony_hr.dto.JobsDto;
+import com.mandm.harmony_hr.entities.Departments;
+import com.mandm.harmony_hr.entities.Employee;
 import com.mandm.harmony_hr.entities.Job;
 import com.mandm.harmony_hr.mappers.JobToJobDetailsDtoMapper;
 import com.mandm.harmony_hr.mappers.JobToJobsDtoMapper;
+import com.mandm.harmony_hr.repositories.DepartmentsRepository;
+import com.mandm.harmony_hr.repositories.EmployeeRepository;
 import com.mandm.harmony_hr.repositories.JobRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class JobService {
 
-    public final JobRepository jobRepository;
+    private final JobRepository jobRepository;
+    private final EmployeeRepository employeeRepository;
+    private final DepartmentsRepository departmentsRepository;
 
-    public JobService(JobRepository jobRepository) {
+    public JobService(JobRepository jobRepository, EmployeeRepository employeeRepository,
+            DepartmentsRepository departmentsRepository) {
         this.jobRepository = jobRepository;
+        this.employeeRepository = employeeRepository;
+        this.departmentsRepository = departmentsRepository;
     }
 
     public List<JobsDto> getAllJobsList() {
@@ -35,6 +46,36 @@ public class JobService {
         Job job = jobRepository.findByJobId(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found with id: " + jobId));
         return JobToJobDetailsDtoMapper.mapToDto(job);
+    }
+
+    @Transactional
+    public JobDetailsDto createJob(CreateJobDto createJobDto) {
+        Employee postedBy = employeeRepository.findEmployeeByUserId(createJobDto.getPostedByUserId())
+                .orElseThrow(() -> new RuntimeException("Posted By Employee not found with id: " + createJobDto.getPostedByUserId()));
+
+        Employee hiringManager = employeeRepository.findById(createJobDto.getHiringManagerId())
+                .orElseThrow(() -> new RuntimeException("Hiring Manager not found with id: " + createJobDto.getHiringManagerId()));
+
+        Departments department = departmentsRepository.findById(createJobDto.getDepartmentId())
+                .orElseThrow(() -> new RuntimeException("Department not found with id: " + createJobDto.getDepartmentId()));
+
+        Job job = new Job();
+        job.setJobTitle(createJobDto.getJobTitle());
+        job.setCompensation(createJobDto.getCompensation());
+        job.setJobDescription(createJobDto.getJobDescription());
+        job.setPostedBy(postedBy);
+        job.setHiringManager(hiringManager);
+        job.setDepartmentId(department);
+        job.setJobAddress(createJobDto.getJobAddress());
+        job.setCity(createJobDto.getCity());
+        job.setState(createJobDto.getState());
+        job.setMinimumExperience(createJobDto.getMinimumExperience());
+        job.setMaximumExperience(createJobDto.getMaximumExperience());
+        job.setPostedOn(new Date());
+        job.setIsActive(true);
+
+        Job savedJob = jobRepository.save(job);
+        return JobToJobDetailsDtoMapper.mapToDto(savedJob);
     }
 
     @Transactional

@@ -3,8 +3,6 @@ package com.mandm.harmony_hr.services;
 import com.mandm.harmony_hr.entities.Users;
 import com.mandm.harmony_hr.repositories.UsersRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +12,6 @@ public class UserService {
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
     public UserService(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;

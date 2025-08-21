@@ -1,5 +1,6 @@
 package com.mandm.harmony_hr;
 
+import com.mandm.harmony_hr.dto.CreateJobDto;
 import com.mandm.harmony_hr.dto.DepartmentTitlesDto;
 import com.mandm.harmony_hr.dto.JobDetailsDto;
 import com.mandm.harmony_hr.dto.JobsDto;
@@ -7,10 +8,12 @@ import com.mandm.harmony_hr.entities.Job;
 import com.mandm.harmony_hr.services.DepartmentsService;
 import com.mandm.harmony_hr.services.JobService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,5 +53,11 @@ public class JobController {
         return ResponseEntity.ok("Jobs with IDs: " + jobIds + " have been deactivated.");
     }
 
-    
+    @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")// Change this to 'ADMIN' 
+    public ResponseEntity<JobDetailsDto> createJob(@RequestBody CreateJobDto createJobDto) {
+        JobDetailsDto newJob = jobService.createJob(createJobDto);
+        return new ResponseEntity<>(newJob, HttpStatus.CREATED);
+    }
+
 }
