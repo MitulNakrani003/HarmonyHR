@@ -3,6 +3,7 @@ package com.mandm.harmony_hr;
 import com.mandm.harmony_hr.dto.CreateJobDto;
 import com.mandm.harmony_hr.dto.DepartmentTitlesDto;
 import com.mandm.harmony_hr.dto.JobDetailsDto;
+import com.mandm.harmony_hr.dto.JobEditDetailsDto;
 import com.mandm.harmony_hr.dto.JobsDto;
 import com.mandm.harmony_hr.entities.Job;
 import com.mandm.harmony_hr.services.DepartmentsService;
@@ -58,6 +59,20 @@ public class JobController {
     public ResponseEntity<JobDetailsDto> createJob(@RequestBody CreateJobDto createJobDto) {
         JobDetailsDto newJob = jobService.createJob(createJobDto);
         return new ResponseEntity<>(newJob, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/editform/{jobid}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('EMPLOYEE')")// Change this to 'ADMIN' 
+    public ResponseEntity<JobEditDetailsDto> getJobEditDetailsById(@PathVariable("jobid") Integer jobid) {
+        JobEditDetailsDto job = jobService.getJobEditDetailsById(jobid);
+        return ResponseEntity.ok(job);
+    }
+
+    @PutMapping("update/{jobid}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<JobDetailsDto> updateJob(@PathVariable("jobid") Integer jobid, @RequestBody CreateJobDto updateJobDto) {
+        JobDetailsDto updatedJob = jobService.updateJob(jobid, updateJobDto);
+        return ResponseEntity.ok(updatedJob);
     }
 
 }
