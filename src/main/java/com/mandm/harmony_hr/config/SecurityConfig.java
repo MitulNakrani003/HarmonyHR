@@ -30,13 +30,12 @@ import java.util.List;
 public class SecurityConfig  {
     private final SecurityUsersDetailsService securityUsersDetailsService;
     private final JwtAuthEntryPoint unauthorizedHandler;
+    private final JwtUtils jwtUtils;
 
-    @Autowired
-    private JwtUtils jwtUtils;
-
-    public SecurityConfig(SecurityUsersDetailsService securityUsersDetailsService, JwtAuthEntryPoint unauthorizedHandler) {
+    public SecurityConfig(SecurityUsersDetailsService securityUsersDetailsService, JwtAuthEntryPoint unauthorizedHandler, JwtUtils jwtUtils) {
         this.securityUsersDetailsService = securityUsersDetailsService;
         this.unauthorizedHandler = unauthorizedHandler;
+        this.jwtUtils = jwtUtils;
     }
 
     @Bean
@@ -82,7 +81,7 @@ public class SecurityConfig  {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
